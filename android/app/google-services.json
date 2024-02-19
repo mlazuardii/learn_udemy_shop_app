@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "35280289669",
+    "project_id": "rit-learn",
+    "storage_bucket": "rit-learn.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:35280289669:android:a385b868acfc9df0968eec",
+        "android_client_info": {
+          "package_name": "com.example.learn_udemy_shop_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCn3UUYeQ3crqirOKqnXQ5y4vF3hD1oGKg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
