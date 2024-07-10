@@ -15,7 +15,11 @@ class _BadgeWdgetState extends State<BadgeWidget> {
 
   getBanners(){
     return _firestore.collection('banners').get().then((QuerySnapshot querySnapshot){
-      querySnapshot.docs.forEach((doc) {});
+      querySnapshot.docs.forEach((doc) {
+        setState(() {
+          _bannerList.add(doc['image']);
+        });
+      });
     });
   }
 
@@ -37,7 +41,7 @@ class _BadgeWdgetState extends State<BadgeWidget> {
         });
       }).toList(),
       options: CarouselOptions(
-          height: 400,
+          height: 200,
           aspectRatio: 16/9,
           viewportFraction: 0.8,
           initialPage: 0,

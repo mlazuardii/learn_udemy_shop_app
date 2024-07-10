@@ -41,10 +41,10 @@ dependencies:
   firebase_storage: ^11.6.5
   image_picker: ^1.0.7
   get: ^4.6.6
-  google_maps_flutter: ^2.5.3
   geolocator: ^11.0.0
   flutter_svg: ^2.0.9
   carousel_slider: ^4.2.1
+  flutter_riverpod: ^2.5.1
 
 dev_dependencies:
   flutter_test:
