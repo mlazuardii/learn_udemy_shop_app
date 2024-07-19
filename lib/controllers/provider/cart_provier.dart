@@ -30,6 +30,48 @@ class CartNotifier extends StateNotifier<Map<String, CartModel>>{
     }
   }
 
+  void incrementItem(String productId){
+    if(state.containsKey(productId)){
+      state[productId]!.quantity++;
+
+      // notify listeners that the state has changed
+
+      state = {... state};
+    }
+  }
+
+  void decrementItem(String productId){
+    if(state.containsKey(productId)){
+      state[productId]!.quantity--;
+
+      // notify listeners that the state has changed
+
+      state = {... state};
+    }
+  }
+
+  void removeAllItems(){
+    state.clear();
+    // Notify listeners that the state has changed
+    state = {... state};
+  }
+
+  void removeItem(String productId){
+    state.remove(productId);
+
+    state = {... state};
+  }
+
+  double calculateTotalAmount(){
+    double totalAmount = 0.0;
+
+    state.forEach((productId, cartItem) {
+      totalAmount += cartItem.quantity * cartItem.price;
+    });
+
+    return totalAmount;
+  }
+
   Map<String, CartModel> get getCartItem => state;
   
 }

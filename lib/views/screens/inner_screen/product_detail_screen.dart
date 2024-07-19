@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:learn_udemy_shop_app/controllers/provider/cart_provier.dart';
+import 'package:learn_udemy_shop_app/controllers/provider/selected_size_provider.dart';
 
 class ProductDetailScreen extends ConsumerStatefulWidget {
   final dynamic productData;
@@ -16,7 +17,10 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
   int _imageIndex = 0;
   @override
   Widget build(BuildContext context) {
+    final selectedSize = ref.watch(selectedSizeNotifier);
     final _cartProvider = ref.read(cartProvider.notifier);
+    final cartItem = ref.watch(cartProvider);
+    final isInCart = cartItem.containsKey(widget.productData['productId']);
 
     return Scaffold(
       appBar: AppBar(
@@ -125,7 +129,11 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
                       return Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: OutlinedButton(onPressed: (){
-                          
+                          final newSelectedSize = widget.productData['sizeList'][index];
+
+                          ref
+                          .read(selectedSizeNotifier.notifier)
+                          .setSelectedSize(newSelectedSize);
                         }, child: Text(widget.productData['sizeList'][index])),
                       );
                     }
@@ -159,14 +167,14 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             InkWell(
-              onTap: () {
-                _cartProvider.addProductToCart(widget.productData['productName'], widget.productData['productId'], widget.productData['imageUrlList'], 1, widget.productData['productQuantity'], widget.productData['productPrice'], widget.productData['vendorId'], 'xl');
+              onTap: isInCart? null : () {
+                _cartProvider.addProductToCart(widget.productData['productName'], widget.productData['productId'], widget.productData['imageUrlList'], 1, widget.productData['productQuantity'], widget.productData['productPrice'], widget.productData['vendorId'], selectedSize);
 
                 print(_cartProvider.getCartItem.values.first.productName);
               },
               child: Container(
                 decoration: BoxDecoration(
-                  color: Colors.pink.shade900,
+                  color: isInCart? Colors.grey : Colors.pink.shade900,
                   borderRadius: BorderRadius.circular(5)
                 ),
                 child: Padding(
@@ -174,7 +182,7 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
                   child: Row(
                     children: [
                       Icon(CupertinoIcons.shopping_cart, color: Colors.white,),
-                      Text('Add to cart', style: TextStyle(
+                      Text(isInCart? 'In Cart' : 'Add to cart', style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
