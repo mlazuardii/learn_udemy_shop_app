@@ -98,7 +98,9 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                 'buyerId':_auth.currentUser!.uid,
                 'productSize': item.productSize,
                 'productImage': item.imageUrl,
-                'vendorQuantity': item.productQuantity
+                'vendorQuantity': item.productQuantity,
+                'accepted':false,
+                'orderDate':DateTime.now()
               }).whenComplete(() {
                 setState(() {
                   _isLoading = false;

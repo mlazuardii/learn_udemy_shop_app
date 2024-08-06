@@ -1,74 +1,69 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_navigation/get_navigation.dart';
-import 'package:learn_udemy_shop_app/views/screens/categories_screen.dart';
+import 'package:learn_udemy_shop_app/controllers/categories_controller.dart';
 
-class CategoryTextWidget extends StatefulWidget {
-  const CategoryTextWidget({super.key});
+class CategoryItemWidget extends StatelessWidget {
 
-  @override
-  State<CategoryTextWidget> createState() => _CategoryTextWidgetState();
-}
-
-class _CategoryTextWidgetState extends State<CategoryTextWidget> {
   @override
   Widget build(BuildContext context) {
-    final Stream<QuerySnapshot> _categoryStream = FirebaseFirestore.instance.collection('categories').snapshots();
+    final CategoryController _categoryController = Get.find<CategoryController>();
 
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Column(
+    return Obx((){
+      return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Categories', style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-            letterSpacing: 2
-          ),),
-          StreamBuilder<QuerySnapshot>(
-            stream: _categoryStream,
-            builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-              if (snapshot.hasError) {
-                return Text('Something went wrong');
-              }
-
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return Text("Loading categories");
-              }
-
-              return Container(
-                height: 40,
-                child: Row(
-                  children: [
-                    Expanded(child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: snapshot.data!.docs.length,
-                      itemBuilder: (context, index){
-                      final categoryData = snapshot.data!.docs[index];
-
-                      return Padding(
-                        padding: const EdgeInsets.all(5.0),
-                        child: ActionChip(
-                          onPressed: (){
-                            
-                          },
-                          backgroundColor: Colors.pink.shade900,
-                          label: Center(
-                          child: Text(categoryData['categoryName'].toUpperCase(), style: TextStyle(color: Colors.white, fontSize: 12),),
-                        )),
-                      );
-                    })),
-                    IconButton(onPressed: (){
-                      Get.to(CategoriesScreen());
-                    }, icon: Icon(Icons.arrow_forward_ios))
-                  ],
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Categories',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold
+                  ),
                 ),
+                Text(
+                  'See All',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold
+                  ),
+                )
+              ],
+            ),
+          ),
+          GridView.builder(
+            itemCount: _categoryController.categories.length,
+            shrinkWrap: true,
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 4,
+            crossAxisSpacing: 8,
+            mainAxisExtent: 8), itemBuilder: ((context, index) {
+              return Column(
+                children: [
+                  Container(
+                    width: MediaQuery.of(context).size.width*0.18,
+                    height: MediaQuery.of(context).size.width*0.18,
+                    clipBehavior: Clip.antiAlias,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(MediaQuery.of(context).size.width*0.18/2),
+                      border: Border.all(
+                        color: Colors.grey
+                      )
+                    ),
+                    child: Image.network(
+                      _categoryController.categories[index].categoryImage
+                    ),
+                  ),
+                  Text(_categoryController.categories[index].categoryName)
+                ],
               );
-            },
-          )
+            }))
         ],
-      ),
-    );
+      );
+    });
   }
 }

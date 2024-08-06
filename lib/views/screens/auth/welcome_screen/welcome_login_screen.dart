@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:learn_udemy_shop_app/views/screens/auth/login_screen.dart';
 import 'package:learn_udemy_shop_app/views/screens/auth/welcome_screen/welcome_register_screen.dart';
 
 class WelcomeLoginScreen extends StatefulWidget {
@@ -27,6 +28,12 @@ class _WelcomeLoginScreenState extends State<WelcomeLoginScreen> {
           clipBehavior: Clip.hardEdge,
           children: [
             Positioned(
+              left: screenWidth * 0.024,
+              top: screenHeight*0.151,
+              child: Image.asset('assets/icons/Illustration.png'),
+            ),
+
+            Positioned(
               top: 0,
               left: -40,
               child: Image.asset('assets/icons/doorpng2.png', width: screenWidth + 80,
@@ -36,17 +43,24 @@ class _WelcomeLoginScreenState extends State<WelcomeLoginScreen> {
             Positioned(
               top: screenHeight * 0.641,
               left: screenWidth * 0.07,
-              child: Container(
-                width: screenWidth * 0.85,
-                height: screenHeight * 0.085,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(9),
-                  color: Colors.white
+              child: InkWell(
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context){
+                    return CustomerLoginScreen();
+                  }));
+                },
+                child: Container(
+                  width: screenWidth * 0.85,
+                  height: screenHeight * 0.085,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(9),
+                    color: Colors.white
+                  ),
+                  child: Center(child: Text('Login As Customer', style: TextStyle(
+                    fontSize: screenHeight* 0.022,
+                    fontWeight: FontWeight.bold
+                  ),)),
                 ),
-                child: Center(child: Text('Login As Customer', style: TextStyle(
-                  fontSize: screenHeight* 0.022,
-                  fontWeight: FontWeight.bold
-                ),)),
               )
             ),
 

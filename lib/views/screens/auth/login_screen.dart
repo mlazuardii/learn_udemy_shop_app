@@ -4,12 +4,12 @@ import 'package:learn_udemy_shop_app/controllers/auth_controller.dart';
 import 'package:learn_udemy_shop_app/views/screens/auth/register_screen.dart';
 import 'package:learn_udemy_shop_app/views/screens/map_screen.dart';
 
-class LoginScreen extends StatefulWidget {
+class CustomerLoginScreen extends StatefulWidget {
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<CustomerLoginScreen> createState() => _CustomerLoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _CustomerLoginScreenState extends State<CustomerLoginScreen> {
   final GlobalKey<FormState> _form_key = GlobalKey<FormState>();
   final AuthController _authController = AuthController();
 
@@ -128,7 +128,7 @@ class _LoginScreenState extends State<LoginScreen> {
               SizedBox(height: 25,),
               TextButton(onPressed: (){
                 Navigator.push(context, MaterialPageRoute(builder: (context){
-                  return RegisterScreen();
+                  return CustomerRegisterScreen();
                 }));
               }, child: Text('Need an account?'))
             ],

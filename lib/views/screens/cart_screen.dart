@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:learn_udemy_shop_app/controllers/provider/cart_provier.dart';
 import 'package:learn_udemy_shop_app/views/screens/inner_screen/checkout_screen.dart';
+import 'package:learn_udemy_shop_app/views/screens/inner_screen/payment_screen.dart';
 
 class CartScreen extends ConsumerStatefulWidget {
   const CartScreen({super.key});
@@ -138,9 +139,12 @@ class _CartScreenState extends ConsumerState<CartScreen> {
                 Text('Total Price'+totalAmount.toStringAsFixed(2)),
                 ElevatedButton(onPressed: (){
                   Navigator.push(context, MaterialPageRoute(builder: (context){
-                    return CheckoutScreen();
+                    // return CheckoutScreen();
+                    return PaymentScreen();
                   }));
-                }, child: Text('Checkout'))
+                }, child: Text('Checkout', style: TextStyle(
+                  fontWeight: FontWeight.bold
+                ),))
               ],
             ),
           ),

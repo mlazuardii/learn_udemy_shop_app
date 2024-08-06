@@ -2,7 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:learn_udemy_shop_app/views/screens/auth/login_screen.dart';
+import 'package:learn_udemy_shop_app/views/screens/inner_screen/customer_order_screen.dart';
 
 class AccountScreen extends StatelessWidget {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -122,6 +124,11 @@ class AccountScreen extends StatelessWidget {
                     ),
                   ),
                   ListTile(
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context){
+                        return CustomerOrderScreen();
+                      }));
+                    },
                     leading: Icon(CupertinoIcons.bag),
                     title: Text(
                       'Orders',
@@ -135,7 +142,7 @@ class AccountScreen extends StatelessWidget {
                       await _auth.signOut().whenComplete((){
                         return Navigator.pushReplacement(context, 
                         MaterialPageRoute(builder: (context){
-                          return LoginScreen();
+                          return CustomerLoginScreen();
                         }));
                       });
                     },

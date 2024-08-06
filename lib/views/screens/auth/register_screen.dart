@@ -8,12 +8,12 @@ import 'package:image_picker/image_picker.dart';
 import 'package:learn_udemy_shop_app/controllers/auth_controller.dart';
 import 'package:learn_udemy_shop_app/views/screens/auth/login_screen.dart';
 
-class RegisterScreen extends StatefulWidget {
+class CustomerRegisterScreen extends StatefulWidget {
   @override
-  State<RegisterScreen> createState() => _RegisterScreenState();
+  State<CustomerRegisterScreen> createState() => _CustomerRegisterScreenState();
 }
 
-class _RegisterScreenState extends State<RegisterScreen> {
+class _CustomerRegisterScreenState extends State<CustomerRegisterScreen> {
   final AuthController _authController = AuthController();
 
   final GlobalKey<FormState> _form_key = GlobalKey<FormState>();
@@ -55,7 +55,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             _isLoading = false;
           });
 
-          Get.to(LoginScreen());
+          Get.to(CustomerLoginScreen());
 
           Get.snackbar('Success', 'Your account has been created',
             backgroundColor: Colors.green,
@@ -233,7 +233,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               
                   TextButton(onPressed: (){
                     Navigator.push(context, MaterialPageRoute(builder: (context){
-                      return LoginScreen();
+                      return CustomerLoginScreen();
                     }));
                   }, child: Text('Already have an account?'))
                 ],

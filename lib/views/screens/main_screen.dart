@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
+import 'package:learn_udemy_shop_app/controllers/categories_controller.dart';
 import 'package:learn_udemy_shop_app/views/screens/account_screen.dart';
 import 'package:learn_udemy_shop_app/views/screens/cart_screen.dart';
 import 'package:learn_udemy_shop_app/views/screens/categories_screen.dart';

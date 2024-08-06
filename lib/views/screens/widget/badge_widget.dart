@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -36,7 +37,11 @@ class _BadgeWdgetState extends State<BadgeWidget> {
         return Builder(builder: (context){
           return Container(
             width: MediaQuery.of(context).size.width,
-            child: Image.network(e, fit: BoxFit.cover),
+            child: CachedNetworkImage(
+        imageUrl: e,
+        placeholder: (context, url) => CircularProgressIndicator(),
+        errorWidget: (context, url, error) => Icon(Icons.error),
+     ),
           );
         });
       }).toList(),
