@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:learn_udemy_shop_app/views/screens/auth/login_screen.dart';
 import 'package:learn_udemy_shop_app/views/screens/inner_screen/customer_order_screen.dart';
+import 'package:learn_udemy_shop_app/views/screens/inner_screen/edit_profile_screen.dart';
 
 class AccountScreen extends StatelessWidget {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -93,7 +94,11 @@ class AccountScreen extends StatelessWidget {
                       width: MediaQuery.of(context).size.width - 80,
                       child: 
                         ElevatedButton(
-                          onPressed: (){},
+                          onPressed: (){
+                            Navigator.push(context, MaterialPageRoute(builder: (context) {
+                              return EditProfileScreen();
+                            },));
+                          },
                           child: Text('Edit Profile')
                           )
                         ),

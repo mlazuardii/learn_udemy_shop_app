@@ -1,12 +1,21 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class CustomerOrderScreen extends StatelessWidget {
-  const CustomerOrderScreen({super.key});
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  String formatedDate(date){
+    final outputDateFormate = DateFormat("dd/MM/yyyy");
+    final outputDate = outputDateFormate.format(date);
+
+    return outputDate;
+  }
 
   @override
   Widget build(BuildContext context) {
-    final Stream<QuerySnapshot> _ordersStream = FirebaseFirestore.instance.collection('orders').snapshots();
+    final Stream<QuerySnapshot> _ordersStream = FirebaseFirestore.instance.collection('orders').where('buyerId',isEqualTo: _auth.currentUser!.uid).snapshots();
 
     return Scaffold(
       appBar: AppBar(
@@ -72,6 +81,10 @@ class CustomerOrderScreen extends StatelessWidget {
                             children: [
                               Text(data['fullName']),
                               Text(data['email']),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text('order date : '+formatedDate(data['orderDate'])),
+                              ),
                             ],
                           ),
                         ),

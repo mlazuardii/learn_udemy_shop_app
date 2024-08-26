@@ -1,8 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:learn_udemy_shop_app/controllers/provider/cart_provier.dart';
 import 'package:learn_udemy_shop_app/controllers/provider/selected_size_provider.dart';
+import 'package:learn_udemy_shop_app/views/screens/inner_screen/chat_screen.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ProductDetailScreen extends ConsumerStatefulWidget {
   final dynamic productData;
@@ -15,6 +18,17 @@ class ProductDetailScreen extends ConsumerStatefulWidget {
 
 class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
   int _imageIndex = 0;
+
+  void callVendor(String phoneNumber) async {
+    final Uri url = Uri(scheme: 'tel', path: phoneNumber);
+
+    if (await canLaunchUrl(url)) {
+      await launchUrl(url);
+    }else{
+      throw('Could not launch phone call');
+    }
+
+  }
   @override
   Widget build(BuildContext context) {
     final selectedSize = ref.watch(selectedSizeNotifier);
@@ -194,11 +208,18 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
               ),
             ),
             IconButton(onPressed: (){
-
+              Navigator.push(context, MaterialPageRoute(builder: (context){
+                return ChatScreen(
+                  sellerId: widget.productData['vendorId'],
+                  buyerId: FirebaseAuth.instance.currentUser!.uid,
+                  productId: widget.productData['productId'],
+                  productName: widget.productData['productName'],
+                );
+              }));
             }, icon: Icon(CupertinoIcons.chat_bubble,
             color: Colors.pink,)),
             IconButton(onPressed: (){
-
+              callVendor("+123");
             }, icon: Icon(CupertinoIcons.phone,
             color: Colors.pink,))
           ],
